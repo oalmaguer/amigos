@@ -1,0 +1,53 @@
+[
+    { 
+        "id": 1,
+        "name": "Bella",
+        "picture": "https://dog.ceo/api/breeds/image/random",
+        "description": "Bella is a playful and friendly dog who loves to run around in the park.",
+        "age": 3,
+        "race": "Labrador Retriever",
+        "color": "golden",
+        "type": "dog"
+    },
+    {
+        "id": 2,
+        "name": "Max",
+        "picture": "https://dog.ceo/api/breeds/image/random",
+        "description": "Max is a calm and affectionate cat who enjoys lounging in the sun.",
+        "age": 5,
+        "race": "Persian Cat",
+        "color": "black",
+        "type": "cat"
+    },
+    {
+        "id": 3,
+        "name": "Charlie",
+        "picture": "https://dog.ceo/api/breeds/image/random",
+        "description": "Charlie is an energetic and curious rabbit who loves to explore new places.",
+        "age": 2,
+        "race": "Netherland Dwarf",
+        "color": "white",
+        "type": "rabbit"
+    },
+    {
+        "id": 4,
+        "name": "Lucy",
+        "picture": "https://dog.ceo/api/breeds/image/random",
+        "description": "Lucy is a gentle and loving bird who enjoys singing in the morning.",
+        "age": 1,
+        "race": "Canary",
+        "color": "white",
+        "type": "bird"
+
+    },
+    {
+        "id": 5,
+        "name": "Rocky",
+        "picture": "https://dog.ceo/api/breeds/image/random",
+        "description": "Rocky is a strong and loyal dog who is very protective of his family.",
+        "age": 4,
+        "race": "German Shepherd",
+        "color": "black",
+        "type": "dog"
+    }
+]
