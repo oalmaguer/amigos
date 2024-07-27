@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useMemo, useEffect } from "react";
 import {
   Select,
@@ -23,15 +22,6 @@ export default function PetList() {
   });
 
   const pets: any = usePets();
-
-  // useEffect(() => {
-  //   fetch("/api/pets/")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setPets(data);
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, []);
 
   const handleFilterChange = (type: any, value: any) => {
     setFilters((prevFilters) => ({

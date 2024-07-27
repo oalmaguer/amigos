@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -66,7 +65,7 @@ export default function Adopta() {
     <main>
       <section className="container mx-auto py-12 px-4 md:px-6">
         <h1 className="text-3xl font-bold mb-8">Adoption Form</h1>
-        <Card className="bg-muted rounded-lg p-6">
+        <Card className="rounded-lg p-6">
           <form>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-4">

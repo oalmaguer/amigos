@@ -19,7 +19,7 @@ export default function Component() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               <div className="bg-background rounded-lg p-6">
                 <PawPrintIcon className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-xl font-bold mb-2">Vetted Pets</h3>
+                <h3 className="text-xl font-bold mb-2">Mascotas Verificadas</h3>
                 <p className="text-sm text-muted-foreground">
                   Todas nuestras mascotas se entregan vacunadas y con su
                   certificado médico.
@@ -35,7 +35,7 @@ export default function Component() {
               </div>
               <div className="bg-background rounded-lg p-6">
                 <HomeIcon className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-xl font-bold mb-2">Forever Homes</h3>
+                <h3 className="text-xl font-bold mb-2">Hogar</h3>
                 <p className="text-sm text-muted-foreground">
                   Trabajamos durante todo el proceso de adopción para que cada
                   una de nuestras mascotas tenga un hogar perfecto.

@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <PawPrintIcon className="h-6 w-6 text-primary" />
-          <span className="text-sm font-medium">Paw Haven</span>
+          <span className="text-sm font-medium">Amigos de los Animales</span>
         </div>
         <nav className="hidden md:flex items-center gap-4">
           <Link
