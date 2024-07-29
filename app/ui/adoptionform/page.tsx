@@ -1,3 +1,4 @@
+'use client';
 import { CONSTANTS } from "@/app/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -47,9 +48,6 @@ export default function AdoptionForm({pets}: any) {
         body: JSON.stringify(formattedData),
       });
       
-
-
-
     }
 
     return (
