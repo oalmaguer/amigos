@@ -3,6 +3,7 @@ import "./ui/globals.css";
 import Navbar from "./ui/navbar/page";
 import Footer from "./ui/footer/page";
 import { PetsProvider } from "@/context";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Amigos App",
@@ -22,6 +23,7 @@ export default function RootLayout({
           <div className="flex-grow">{children}</div>
           <Footer />
         </PetsProvider>
+        <Toaster />
       </body>
     </html>
   );

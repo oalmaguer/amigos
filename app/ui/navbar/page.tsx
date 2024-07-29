@@ -60,9 +60,11 @@ export default function Navbar() {
             Agregar una Mascota
           </Link>
         </nav>
-        <Button size="sm" className="hidden md:inline-flex">
-          Contáctanos
-        </Button>
+        <a href="mailto:almaguero95@gmail.com">
+          <Button size="sm" className="hidden md:inline-flex">
+            Contáctanos
+          </Button>
+        </a>
       </div>
     </header>
   );

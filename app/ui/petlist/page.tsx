@@ -39,7 +39,7 @@ export default function PetList() {
           <CardFooter>
             <Link
               href={`/petdetails/${pet.id}`}
-              className="inline-flex w-full h-9 items-center justify-center rounded-md bg-[#6c757d] px-4 py-2 text-sm font-medium text-[#f8f9fa] shadow transition-colors hover:bg-[#495057] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#343a40] disabled:pointer-events-none disabled:opacity-50"
+              className="inline-flex w-full h-9 items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-[#f8f9fa] shadow transition-colors hover:bg-[#495057] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#343a40] disabled:pointer-events-none disabled:opacity-50"
               prefetch={false}
             >
               Adopta a {pet.name}

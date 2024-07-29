@@ -24,16 +24,16 @@ export default function Donaciones() {
       ...prevData,
       [type]: value,
     }));
-    console.log(formData);
+    
   };
 
   const handleCreateOrder = async () => {
-    console.log("formData: ", formData);
+    
     const formattedData = {
       ...formData,
       amount: parseInt(formData.amount),
     };
-    console.log("formattedData: ", formattedData);
+    
 
     const response = await fetch("/api/donacion", {
       method: "POST",
@@ -49,7 +49,7 @@ export default function Donaciones() {
     }
 
     const order = await response.json();
-    console.log(order);
+    
     return order.id;
   };
 
@@ -62,8 +62,8 @@ export default function Donaciones() {
               Dona a Amigos de los Animales!
             </h1>
             <p className="text-muted-foreground mb-8">
-              Tus donaciones nos ayudan a proveer comida, albergue y atencion
-              medica para los animales en nuestra atencion. Cada contribucion
+              Tus donaciones nos ayudan a proveer comida, albergue y atención
+              médica para los animales en nuestra cuidado. Cada contribución
               hace una diferencia.
             </p>
             <div className="space-y-4">

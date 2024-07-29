@@ -21,10 +21,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CONSTANTS } from "@/app/lib/constants";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function AddPetForm({ onAddRecord }: any) {
   const supabase = createClientComponentClient();
-
+  const {toast} = useToast();
   const [formData, setFormData] = useState({
     name: "",
     picture: "",
@@ -59,6 +60,7 @@ export default function AddPetForm({ onAddRecord }: any) {
 
     if (result.error) return result.error;
 
+    
     //upload image to supabase
     const file: any = image;
 
@@ -84,8 +86,16 @@ export default function AddPetForm({ onAddRecord }: any) {
     const { data, error } = await supabase.from("pets").upsert({
       id: pet.data[0].id,
       picture: `https://typoamhjuylsgwfpsroq.supabase.co/storage/v1/object/public/avatars/${pet.data[0].id}/${pet.data[0].name}-${pet.data[0].id}`,
-    });
+    }).select();
+
+    
+
+    if (data) {
+      toast({
+        title: "Formulario enviado con éxito",
+      })
   };
+}
   const handleChange = (type: any, value: any) => {
     setFormData({
       ...formData,
