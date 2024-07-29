@@ -14,16 +14,17 @@ export default function AdoptionForm({pets}: any) {
     const pets2 = pets
     const { toast } = useToast()
 
+    let defaultFilter = {
+        name: "",
+        address: "",
+        email: "",
+        phone: "",
+        residencia: "",
+        pet: "",
+        reason: "",
+      }
     
-    const [formData, setFormData] = useState({
-      name: "",
-      address: "",
-      email: "",
-      phone: "",
-      residencia: "",
-      pet: "",
-      reason: "",
-    });
+    const [formData, setFormData] = useState(defaultFilter);
   
     const handleChange = (type: any, value: any) => {
       
@@ -47,6 +48,17 @@ export default function AdoptionForm({pets}: any) {
         },
         body: JSON.stringify(formattedData),
       });
+
+      console.log(response);
+      if (response.ok) {
+        setFormData(defaultFilter);
+
+        toast({
+          title: "Adopción exitosa",
+          description: "Tu solicitud de adopción ha sido enviada exitosamente.",
+        });
+
+      }
       
     }
 
