@@ -24,7 +24,7 @@ export default function Footer() {
             Ver todas las Mascotas
           </Link>
           <Link
-            href="#"
+            href="/adopta"
             className="text-sm font-medium hover:underline"
             prefetch={false}
           >
@@ -38,7 +38,7 @@ export default function Footer() {
             Voluntariado
           </Link> */}
           <Link
-            href="#"
+            href="/donaciones"
             className="text-sm font-medium hover:underline"
             prefetch={false}
           >

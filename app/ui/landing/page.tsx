@@ -55,7 +55,7 @@ export default function Component() {
                 Echa un vistazo a nuestras mascotas disponibles para adoptar.
               </p>
               <Link
-                href="#"
+                href="/petlist"
                 className="inline-flex items-center gap-2 text-primary hover:underline"
                 prefetch={false}
               >
@@ -65,7 +65,7 @@ export default function Component() {
             </div>
             <div>
               <h3 className="text-xl font-bold mb-4">
-                Paso 2: Applica para Adoptar
+                Paso 2: Aplica para Adoptar
               </h3>
               <p className="text-sm text-muted-foreground mb-6">
                 Llena el formulario de solicitud para adoptar una mascota y
@@ -73,7 +73,7 @@ export default function Component() {
                 usted y la mascota.
               </p>
               <Link
-                href="#"
+                href="/adopta"
                 className="inline-flex items-center gap-2 text-primary hover:underline"
                 prefetch={false}
               >

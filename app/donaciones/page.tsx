@@ -6,6 +6,7 @@ import { Select } from "@/components/ui/select";
 import Image from "next/image";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useState } from "react";
+import Link from "next/link";
 export default function Donaciones() {
   const initialOptions = {
     clientId:
@@ -66,7 +67,7 @@ export default function Donaciones() {
               hace una diferencia.
             </p>
             <div className="space-y-4">
-              <div>
+              {/* <div>
                 <Label htmlFor="amount">Cantidad de donación</Label>
                 <div className="flex items-center gap-2">
                   <Input
@@ -78,9 +79,9 @@ export default function Donaciones() {
                   />
                   <span className="text-muted-foreground">MXN</span>
                 </div>
-              </div>
+              </div> */}
 
-              <div>
+              {/* <div>
                 <Label htmlFor="name">Nombre</Label>
                 <Input
                   id="name"
@@ -107,14 +108,13 @@ export default function Donaciones() {
                   placeholder="Escribe un mensaje"
                   onChange={(e) => handleChange("message", e.target.value)}
                 />
-              </div>
+              </div> */}
               <div className="">
-                <PayPalScriptProvider options={initialOptions}>
-                  <PayPalButtons
-                    style={{ layout: "horizontal" }}
-                    createOrder={handleCreateOrder}
-                  />
-                </PayPalScriptProvider>
+                <Link href="https://www.paypal.com/donate/?business=S46SQQLH59WM6&no_recurring=0&item_name=Cualquier+cantidad+es+apreciada%2C+gracias%21&currency_code=MXN">
+                  <Button variant="default" className="w-full">
+                    Haz una Donación :)
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
