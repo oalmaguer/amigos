@@ -1,7 +1,15 @@
+'use client';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <header className="container mx-auto py-8 px-4 md:px-6">
       <div className="flex items-center justify-between">
@@ -31,13 +39,6 @@ export default function Navbar() {
           >
             Adopta
           </Link>
-          {/* <Link
-            href="#"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-          >
-            Voluntariado
-          </Link> */}
           <Link
             href="/donaciones"
             className="text-sm font-medium hover:underline"
@@ -45,13 +46,6 @@ export default function Navbar() {
           >
             Donaciones
           </Link>
-          {/* <Link
-            href="#"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-          >
-            Sobre Nosotros
-          </Link> */}
           <Link
             href="/addpet"
             className="text-sm font-medium hover:underline"
@@ -67,12 +61,79 @@ export default function Navbar() {
             Ver lista de Adopciones
           </Link>
         </nav>
-        <a href="mailto:almaguero95@gmail.com">
-          <Button size="sm" className="hidden md:inline-flex">
-            Contáctanos
-          </Button>
+        <a href="mailto:almaguero95@gmail.com" className="hidden md:inline-flex">
+          <Button size="sm">Contáctanos</Button>
         </a>
+        <button
+          className="md:hidden text-primary"
+          onClick={toggleMobileMenu}
+        >
+          {isMobileMenuOpen ? (
+            <XIcon className="h-6 w-6" />
+          ) : (
+            <MenuIcon className="h-6 w-6" />
+          )}
+        </button>
       </div>
+      {isMobileMenuOpen && (
+        <nav className="md:hidden flex flex-col gap-4 mt-4">
+          <Link
+            href="/"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Inicio
+          </Link>
+          <Link
+            href="/petlist"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Ver todas las Mascotas
+          </Link>
+          <Link
+            href="/adopta"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Adopta
+          </Link>
+          <Link
+            href="/donaciones"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Donaciones
+          </Link>
+          <Link
+            href="/addpet"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Agregar una Mascota
+          </Link>
+          <Link
+            href="/lista-adopt"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Ver lista de Adopciones
+          </Link>
+          <a
+            href="mailto:almaguero95@gmail.com"
+            className="text-sm font-medium hover:underline"
+            onClick={toggleMobileMenu}
+          >
+            Contáctanos
+          </a>
+        </nav>
+      )}
     </header>
   );
 }
@@ -115,6 +176,27 @@ function XIcon(props: any) {
     >
       <path d="M18 6 6 18" />
       <path d="m6 6 12 12" />
+    </svg>
+  );
+}
+
+function MenuIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="18" x2="21" y2="18" />
     </svg>
   );
 }
