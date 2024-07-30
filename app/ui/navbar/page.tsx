@@ -59,6 +59,13 @@ export default function Navbar() {
           >
             Agregar una Mascota
           </Link>
+          <Link
+            href="/lista-adopt"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+          >
+            Ver lista de Adopciones
+          </Link>
         </nav>
         <a href="mailto:almaguero95@gmail.com">
           <Button size="sm" className="hidden md:inline-flex">

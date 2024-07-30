@@ -23,16 +23,13 @@ export default function Donaciones() {
       ...prevData,
       [type]: value,
     }));
-    
   };
 
   const handleCreateOrder = async () => {
-    
     const formattedData = {
       ...formData,
       amount: parseInt(formData.amount),
     };
-    
 
     const response = await fetch("/api/donacion", {
       method: "POST",
@@ -48,7 +45,7 @@ export default function Donaciones() {
     }
 
     const order = await response.json();
-    
+
     return order.id;
   };
 
@@ -109,7 +106,10 @@ export default function Donaciones() {
                 />
               </div> */}
               <div className="">
-                <Link href="https://www.paypal.com/donate/?business=S46SQQLH59WM6&no_recurring=0&item_name=Cualquier+cantidad+es+apreciada%2C+gracias%21&currency_code=MXN">
+                <Link
+                  target="_blank"
+                  href="https://www.paypal.com/donate/?business=S46SQQLH59WM6&no_recurring=0&item_name=Cualquier+cantidad+es+apreciada%2C+gracias%21&currency_code=MXN"
+                >
                   <Button variant="default" className="w-full">
                     Haz una Donación :)
                   </Button>

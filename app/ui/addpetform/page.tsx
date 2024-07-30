@@ -24,8 +24,9 @@ import { CONSTANTS } from "@/app/lib/constants";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function AddPetForm({ onAddRecord }: any) {
+  const [showLoading, setshowLoading] = useState(false);
   const supabase = createClientComponentClient();
-  const {toast} = useToast();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     picture: "",
@@ -40,7 +41,12 @@ export default function AddPetForm({ onAddRecord }: any) {
   const handleImageChange = (e: any) => {
     setImage(e.target.files[0]);
   };
+
+  const toggleElement = (status: any) => {
+    setshowLoading(status);
+  };
   const handleSubmit = async (e: any) => {
+    toggleElement(true);
     e.preventDefault();
     const formattedData = {
       ...formData,
@@ -60,7 +66,6 @@ export default function AddPetForm({ onAddRecord }: any) {
 
     if (result.error) return result.error;
 
-    
     //upload image to supabase
     const file: any = image;
 
@@ -83,19 +88,21 @@ export default function AddPetForm({ onAddRecord }: any) {
 
   const updateImg = async (pet: any) => {
     const ext = pet.data[0].picture.split(".").pop();
-    const { data, error } = await supabase.from("pets").upsert({
-      id: pet.data[0].id,
-      picture: `https://typoamhjuylsgwfpsroq.supabase.co/storage/v1/object/public/avatars/${pet.data[0].id}/${pet.data[0].name}-${pet.data[0].id}`,
-    }).select();
-
-    
+    const { data, error } = await supabase
+      .from("pets")
+      .upsert({
+        id: pet.data[0].id,
+        picture: `https://typoamhjuylsgwfpsroq.supabase.co/storage/v1/object/public/avatars/${pet.data[0].id}/${pet.data[0].name}-${pet.data[0].id}`,
+      })
+      .select();
 
     if (data) {
       toast({
         title: "Formulario enviado con éxito",
-      })
+      });
+      toggleElement(false);
+    }
   };
-}
   const handleChange = (type: any, value: any) => {
     setFormData({
       ...formData,
@@ -220,6 +227,18 @@ export default function AddPetForm({ onAddRecord }: any) {
       <CardFooter>
         <div className="flex justify-end">
           <Button onClick={handleSubmit}>Agregar Mascota</Button>
+          {showLoading && (
+            <div className="flex items-center justify-center">
+              <div
+                className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+                role="status"
+              >
+                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                  Loading...
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </CardFooter>
     </Card>
