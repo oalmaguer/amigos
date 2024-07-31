@@ -1,7 +1,19 @@
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import SignOutButton from "../signoutbutton/page";
+import { useEffect, useState } from "react";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log(user);
+
   return (
     <header className="container mx-auto py-8 px-4 md:px-6">
       <div className="flex items-center justify-between">
@@ -31,13 +43,7 @@ export default function Navbar() {
           >
             Adopta
           </Link>
-          {/* <Link
-            href="#"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-          >
-            Voluntariado
-          </Link> */}
+
           <Link
             href="/donaciones"
             className="text-sm font-medium hover:underline"
@@ -45,27 +51,27 @@ export default function Navbar() {
           >
             Donaciones
           </Link>
-          {/* <Link
-            href="#"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-          >
-            Sobre Nosotros
-          </Link> */}
-          <Link
-            href="/addpet"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-          >
-            Agregar una Mascota
-          </Link>
-          <Link
-            href="/lista-adopt"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-          >
-            Ver lista de Adopciones
-          </Link>
+
+          {user && (
+            <Link
+              href="/addpet"
+              className="text-sm font-medium hover:underline"
+              prefetch={false}
+            >
+              Agregar una Mascota
+            </Link>
+          )}
+
+          {user && (
+            <Link
+              href="/lista-adopt"
+              className="text-sm font-medium hover:underline"
+              prefetch={false}
+            >
+              Ver lista de Adopciones
+            </Link>
+          )}
+          {user && <SignOutButton />}
         </nav>
         <a href="mailto:almaguero95@gmail.com">
           <Button size="sm" className="hidden md:inline-flex">
