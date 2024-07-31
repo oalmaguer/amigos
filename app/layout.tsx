@@ -4,6 +4,7 @@ import Navbar from "./ui/navbar/page";
 import Footer from "./ui/footer/page";
 import { PetsProvider } from "@/context";
 import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/context/auth";
 
 export const metadata: Metadata = {
   title: "Amigos App",
@@ -17,12 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="h-screen h-screen flex flex-col">
+      <body className="h-screen flex flex-col">
+      <AuthProvider>
         <PetsProvider>
           <Navbar />
           <div className="flex-grow">{children}</div>
           <Footer />
         </PetsProvider>
+      </AuthProvider>
         <Toaster />
       </body>
     </html>

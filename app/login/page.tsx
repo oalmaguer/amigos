@@ -1,5 +1,4 @@
 "use client";
-import { createClient } from "@/utils/supabase/client";
 import {
   Card,
   CardContent,
@@ -11,53 +10,55 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'
+import { supabase } from "../lib/supabaseClient";
 
 export default function LoginPage() {
-  const supabase = createClient();
+  const router = useRouter()
+
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-
-        console.log(data);
-        if (data === null) {
-        }
-      } catch (e) {
-        console.log(JSON.stringify(e));
+    // Check for existing session
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      console.log('Session:', session); 
+      if (session) {
+        // Redirect if user is already logged in
+        router.push('/'); // Adjust this path as needed
       }
     };
 
-    fetchData();
+    checkSession();
   }, []);
-  console.log("supabase", supabase);
-  const signIn = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    console.log("entra");
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const { user, error }: any = await supabase.auth.signInWithPassword({ email, password });
 
     console.log(user);
 
-    //3: log in
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: "almaguero95@gmail.com",
-      password: "123456",
-    });
-    console.log(data, error);
+    if (error) {
+      setError(error.message);
+    } else {
+      // Autenticación exitosa, redirigir o realizar acciones necesarias
+      console.log('User logged in:', user);
 
-    if (!error) {
-      redirect("/");
+      router.push("/")
     }
+
+    setLoading(false);
   };
 
   return (
-    <form action={signIn}>
+    <form onSubmit={handleLogin}>
       <div className="flex items-center justify-center h-[calc(100vh-3.5rem)]">
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
@@ -74,15 +75,16 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="m@example.com"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input name="password" id="password" type="password" />
+              <Input name="password" id="password" type="password"  onChange={(e) => setPassword(e.target.value)} />
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full">Sign in</Button>
+            <Button type="submit" className="w-full">Sign in</Button>
           </CardFooter>
         </Card>
       </div>

@@ -1,18 +1,28 @@
+'use client';
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import SignOutButton from "../signoutbutton/page";
 import { useEffect, useState } from "react";
+import { supabase } from "@/app/lib/supabaseClient";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth";
 
-export default async function Navbar() {
-  const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function Navbar() {
+  // const [user, setUser] = useState<any>(null);
+  const { user } = useAuth();
+  console.log('user', user)
 
-  console.log(user);
+   const router = useRouter();
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error signing out:', error);
+    } else {
+      // Redirect to login page or home page after sign out
+      router.push('/login');
+    }
+  };
 
   return (
     <header className="container mx-auto py-8 px-4 md:px-6">
@@ -71,7 +81,7 @@ export default async function Navbar() {
               Ver lista de Adopciones
             </Link>
           )}
-          {user && <SignOutButton />}
+          {user &&  <Button size="sm" variant="destructive" onClick={handleSignOut}>Cerrar Sesión</Button>}
         </nav>
         <a href="mailto:almaguero95@gmail.com">
           <Button size="sm" className="hidden md:inline-flex">

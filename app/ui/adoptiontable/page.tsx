@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,50 +19,9 @@ import {
 import { get } from "http";
 import { use, useEffect, useState } from "react";
 
-export default function AdoptionTable() {
-  const [adoptions, setAdoptions] = useState<any>([]);
-  const [petData, setPetData] = useState<any>([]);
-
-  useEffect(() => {
-    getAdoptions();
-  }, []);
-  const getAdoptions = async () => {
-    const response = await fetch("/api/adoption", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const result = await response.json();
-
-    if (result.error) return result.error;
-
-    const convert = await Promise.all(
-      result.data.map(async (elem: any) => {
-        return { ...elem, pet: await getPets(elem.pet) };
-      })
-    );
-    console.log(convert);
-
-    setAdoptions(convert);
-  };
-
-  const getPets = async (id: any) => {
-    const response = await fetch(`/api/pets/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log(result);
-      return result;
-    }
-  };
-
+export default function AdoptionTable({adoptions}: any) {
+  console.log(  adoptions)
+ 
   return (
     <div className=" mx-auto py-8 px-4 md:px-6">
       <Card>
@@ -84,12 +43,9 @@ export default function AdoptionTable() {
                 <TableHead>Estado Civil</TableHead>
                 <TableHead>Nombre Mascota</TableHead>
                 <TableHead>Color</TableHead>
-                <TableHead>Raza</TableHead>
+                <TableHead>Tipo</TableHead>
                 <TableHead>Edad</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>
-                  <span className="sr-only">Detalles</span>
-                </TableHead>
+             
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -112,16 +68,10 @@ export default function AdoptionTable() {
                   <TableCell>{adoption.reason}</TableCell>
                   <TableCell>{adoption.residencia}</TableCell>
                   <TableCell>{adoption.pet.pets[0].name}</TableCell>
+                  <TableCell>{adoption.pet.pets[0].color}</TableCell>
                   <TableCell>{adoption.pet.pets[0].type}</TableCell>
                   <TableCell>{adoption.pet.pets[0].age}</TableCell>
-                  <TableCell>
-                    <Badge variant="secondary">Available</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="outline" size="sm">
-                      Ver Detalles
-                    </Button>
-                  </TableCell>
+                 
                 </TableRow>
               ))}
               {/* <TableRow>

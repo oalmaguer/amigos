@@ -1,18 +1,17 @@
-import { createClient } from "@/utils/supabase/server";
+'use client';
+import { useEffect, useState } from "react";
 import AddPetForm from "../ui/addpetform/page";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { supabase } from "../lib/supabaseClient";
+import { useAuth } from "@/context/auth";
 
-export default async function AddPet() {
-  const supabase = createClient();
+export default function AddPet() {
+  const router = useRouter();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user } = useAuth();
+  console.log('user', user)
+  if (!user) router.push('/login')
 
-  console.log(user);
 
-  if (!user) {
-    redirect("/login");
-  }
   return <AddPetForm />;
 }
