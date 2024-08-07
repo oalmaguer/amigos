@@ -11,26 +11,27 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { supabase } from "../lib/supabaseClient";
 
 export default function LoginPage() {
-  const router = useRouter()
+  const router = useRouter();
 
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Check for existing session
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      console.log('Session:', session); 
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (session) {
         // Redirect if user is already logged in
-        router.push('/'); // Adjust this path as needed
+        router.push("/"); // Adjust this path as needed
       }
     };
 
@@ -41,17 +42,17 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    const { user, error }: any = await supabase.auth.signInWithPassword({ email, password });
-
-    console.log(user);
+    const { user, error }: any = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (error) {
       setError(error.message);
     } else {
       // Autenticación exitosa, redirigir o realizar acciones necesarias
-      console.log('User logged in:', user);
 
-      router.push("/")
+      router.push("/");
     }
 
     setLoading(false);
@@ -80,11 +81,18 @@ export default function LoginPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input name="password" id="password" type="password"  onChange={(e) => setPassword(e.target.value)} />
+              <Input
+                name="password"
+                id="password"
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full">Sign in</Button>
+            <Button type="submit" className="w-full">
+              Sign in
+            </Button>
           </CardFooter>
         </Card>
       </div>

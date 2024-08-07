@@ -1,4 +1,6 @@
-'use client';
+"use client";
+import { CONSTANTS } from "@/app/lib/constants";
+import { supabase } from "@/app/lib/supabaseClient";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,6 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+
 import {
   Table,
   TableHeader,
@@ -16,12 +20,69 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
+import { useToast } from "@/components/ui/use-toast";
 import { get } from "http";
+import { revalidatePath } from "next/cache";
 import { use, useEffect, useState } from "react";
 
-export default function AdoptionTable({adoptions}: any) {
-  console.log(  adoptions)
- 
+export default function AdoptionTable({ adoptions }: any) {
+  let modifiedAdoptions = adoptions.map((adoption: any) => {
+    // Modify the properties of each adoption object
+    return {
+      ...adoption,
+    };
+  });
+
+  const [data, setData] = useState(adoptions);
+  const [value, setValue] = useState<any>(null);
+
+  const [updated, setUpdated] = useState<any>([]);
+  useEffect(() => {
+    setData(adoptions);
+  }, [adoptions]);
+
+  const { toast } = useToast();
+
+  const deleteAdoption = async (adoptionId: any) => {
+    try {
+      const { data: deletedData, error } = await supabase
+        .from("adopciones")
+        .delete()
+        .eq("id", adoptionId)
+        .select();
+
+      if (error) throw error;
+      const { id } = deletedData[0];
+      toast({ title: "Eliminación exitosa." });
+      setData((prevData: any) =>
+        prevData.filter((adoption: any) => adoption.id !== id)
+      );
+    } catch (error) {
+      toast({ title: "Ha ocurrido un error. Intenta de nuevo." });
+    }
+  };
+
+  const mascotAdopted = async (adoptionId: any) => {
+    try {
+      const { data: updatedData, error } = await supabase
+        .from("adopciones")
+        .update({ status: true })
+        .eq("id", adoptionId)
+        .select();
+
+      if (error) throw error;
+      toast({ title: "Adopción actualizada correctamente." });
+      setData((prevData: any) =>
+        prevData.map((adoption: any) =>
+          adoption.id === adoptionId ? { ...adoption, status: true } : adoption
+        )
+      );
+    } catch (error) {
+      toast({ title: "Ha ocurrido un error. Intenta de nuevo." });
+    }
+  };
+
+  const saveChanges = async () => {};
   return (
     <div className=" mx-auto py-8 px-4 md:px-6">
       <Card>
@@ -45,12 +106,20 @@ export default function AdoptionTable({adoptions}: any) {
                 <TableHead>Color</TableHead>
                 <TableHead>Tipo</TableHead>
                 <TableHead>Edad</TableHead>
-             
+                <TableHead>Marcar como adoptado</TableHead>
+                <TableHead></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {adoptions?.map((adoption: any) => (
-                <TableRow key={adoption.id}>
+              {data?.map((adoption: any) => (
+                <TableRow
+                  key={adoption.id}
+                  className={
+                    adoption.status
+                      ? "bg-gray-200 opacity-50 cursor-not-allowed"
+                      : ""
+                  }
+                >
                   {/* {JSON.stringify(adoption)} */}
                   <TableCell className="font-medium">{adoption.name}</TableCell>
                   <TableCell>{adoption.email}</TableCell>
@@ -71,76 +140,45 @@ export default function AdoptionTable({adoptions}: any) {
                   <TableCell>{adoption.pet.pets[0].color}</TableCell>
                   <TableCell>{adoption.pet.pets[0].type}</TableCell>
                   <TableCell>{adoption.pet.pets[0].age}</TableCell>
-                 
+
+                  <TableCell>
+                    <Button
+                      className={
+                        adoption.status
+                          ? "bg-gray-200 opacity-50 cursor-not-allowed"
+                          : "bg-green-500 text-white"
+                      }
+                      variant="outline"
+                      size="sm"
+                      onClick={() => mascotAdopted(adoption.id)}
+                    >
+                      {adoption.status ? "Adoptado" : "Marcar como adoptado"}
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      className="bg-red-500 text-white"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => deleteAdoption(adoption.id)}
+                    >
+                      Eliminar
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
-              {/* <TableRow>
-                <TableCell className="font-medium">Buddy</TableCell>
-                <TableCell>Labrador Retriever</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>
-                  <Badge variant="secondary">Available</Badge>
-                </TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Daisy</TableCell>
-                <TableCell>Domestic Shorthair</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>
-                  <Badge variant="secondary">Available</Badge>
-                </TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Max</TableCell>
-                <TableCell>German Shepherd</TableCell>
-                <TableCell>5</TableCell>
-                <TableCell>
-                  <Badge variant="outline">Adopted</Badge>
-                </TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Luna</TableCell>
-                <TableCell>Domestic Longhair</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>
-                  <Badge variant="secondary">Available</Badge>
-                </TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Bella</TableCell>
-                <TableCell>Pitbull Terrier</TableCell>
-                <TableCell>4</TableCell>
-                <TableCell>
-                  <Badge variant="secondary">Available</Badge>
-                </TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
-                </TableCell>
-              </TableRow> */}
             </TableBody>
           </Table>
+          {updated.length > 0 && (
+            <Button
+              onClick={() => saveChanges()}
+              variant="outline"
+              size="sm"
+              className="mt-2"
+            >
+              Guardar cambios
+            </Button>
+          )}
         </CardContent>
       </Card>
     </div>

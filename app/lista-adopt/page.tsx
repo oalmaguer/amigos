@@ -1,19 +1,28 @@
-'use client';
+"use client";
 import { createClient } from "@/utils/supabase/server";
 import AdoptionTable from "../ui/adoptiontable/page";
 import { redirect, useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth";
 import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabaseClient";
+import { get } from "http";
 
 export default function AdoptList() {
   const router = useRouter();
-  const { user } = useAuth();
-  console.log('user', user)
   const [adoptions, setAdoptions] = useState<any>([]);
-  const [petData, setPetData] = useState<any>([]);
-  
+  const [session, setSession] = useState<any>(null);
+
+  const getPetsession = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) router.push("/login");
+
+    setSession(session);
+  };
   useEffect(() => {
-if (!user) router.push('/login')
+    getPetsession();
     getAdoptions();
   }, []);
   const getAdoptions = async () => {
@@ -33,7 +42,6 @@ if (!user) router.push('/login')
         return { ...elem, pet: await getPets(elem.pet) };
       })
     );
-    console.log(convert);
 
     setAdoptions(convert);
   };
@@ -48,7 +56,7 @@ if (!user) router.push('/login')
 
     if (response.ok) {
       const result = await response.json();
-      console.log(result);
+
       return result;
     }
   };

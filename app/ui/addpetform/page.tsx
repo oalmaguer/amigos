@@ -11,8 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -22,20 +21,19 @@ import {
 } from "@/components/ui/select";
 import { CONSTANTS } from "@/app/lib/constants";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/app/lib/supabaseClient";
 
-export default function AddPetForm({ onAddRecord }: any) {
+export default function AddPetForm() {
+  const router = useRouter();
+  const [creador, setCreador] = useState("");
+  const [name, setName] = useState("");
+  const [color, setColor] = useState("");
+  const [type, setType] = useState("");
+  const [age, setAge] = useState<any>("");
+  const [description, setDescription] = useState("");
   const [showLoading, setshowLoading] = useState(false);
-  const supabase = createClientComponentClient();
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    picture: "",
-    description: "",
-    age: "",
-    color: "",
-    type: "",
-  });
-
   const [image, setImage] = useState<any>(null);
 
   const handleImageChange = (e: any) => {
@@ -48,9 +46,32 @@ export default function AddPetForm({ onAddRecord }: any) {
   const handleSubmit = async (e: any) => {
     toggleElement(true);
     e.preventDefault();
+
+    const body = {
+      name,
+      color,
+      type,
+      age,
+      description,
+    };
+    if (
+      !creador ||
+      !color ||
+      !type ||
+      !age ||
+      !description ||
+      !image ||
+      !image
+    ) {
+      toast({
+        title: "Favor de rellenar todos los campos.",
+      });
+      setshowLoading(false);
+      return;
+    }
     const formattedData = {
-      ...formData,
-      age: parseInt(formData.age),
+      ...body,
+      age: parseInt(body.age),
       picture: `https://typoamhjuylsgwfpsroq.supabase.co/storage/v1/object/public/avatars/1/${image.name}`,
     };
 
@@ -101,14 +122,20 @@ export default function AddPetForm({ onAddRecord }: any) {
         title: "Formulario enviado con éxito",
       });
       toggleElement(false);
+      resetForm();
     }
   };
-  const handleChange = (type: any, value: any) => {
-    setFormData({
-      ...formData,
-      [type]: value,
-    });
+
+  const resetForm = () => {
+    setName("");
+    setColor("");
+    setType("");
+    setAge("");
+    setDescription("");
+    setImage(null);
+    setCreador("");
   };
+
   return (
     <Card className="mt-8 mb-8 border-0 max-w-4xl mx-auto p-6 sm:p-8 md:p-10">
       <CardHeader>
@@ -120,7 +147,10 @@ export default function AddPetForm({ onAddRecord }: any) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          onSubmit={handleSubmit}
+        >
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="name" className="text-sm font-medium">
@@ -129,7 +159,8 @@ export default function AddPetForm({ onAddRecord }: any) {
               <Input
                 name="name"
                 placeholder="Nombre de la Mascota"
-                onChange={(value) => handleChange("name", value.target.value)}
+                value={name}
+                onChange={(event) => setName(event.target.value)}
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -138,8 +169,9 @@ export default function AddPetForm({ onAddRecord }: any) {
                   Color
                 </Label>
                 <Select
+                  value={color}
+                  onValueChange={(event) => setColor(event)}
                   name="color"
-                  onValueChange={(value) => handleChange("color", value)}
                 >
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Color" />
@@ -155,11 +187,11 @@ export default function AddPetForm({ onAddRecord }: any) {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="type" className="text-sm font-medium">
-                  Especie
+                  type
                 </Label>
-                <Select onValueChange={(value) => handleChange("type", value)}>
+                <Select value={type} onValueChange={(event) => setType(event)}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Especie" />
+                    <SelectValue placeholder="type" />
                   </SelectTrigger>
                   <SelectContent>
                     {CONSTANTS.TIPO.map((type) => (
@@ -180,7 +212,8 @@ export default function AddPetForm({ onAddRecord }: any) {
                   name="age"
                   type="number"
                   placeholder="Edad"
-                  onChange={(value) => handleChange("age", value.target.value)}
+                  value={age}
+                  onChange={(event) => setAge(event.target.value)}
                 />
               </div>
               <div className="grid gap-2">
@@ -202,9 +235,8 @@ export default function AddPetForm({ onAddRecord }: any) {
                 name="description"
                 rows={5}
                 placeholder="Describir"
-                onChange={(value) =>
-                  handleChange("description", value.target.value)
-                }
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
               />
             </div>
           </div>
@@ -216,9 +248,8 @@ export default function AddPetForm({ onAddRecord }: any) {
               <Input
                 name="creador"
                 placeholder="Tu Nombre"
-                onChange={(value) =>
-                  handleChange("creador", value.target.value)
-                }
+                value={creador}
+                onChange={(event) => setCreador(event.target.value)}
               />
             </div>
           </div>
@@ -228,7 +259,7 @@ export default function AddPetForm({ onAddRecord }: any) {
         <div className="flex justify-end">
           <Button onClick={handleSubmit}>Agregar Mascota</Button>
           {showLoading && (
-            <div className="flex items-center justify-center">
+            <div className="ml-4 flex items-center justify-center">
               <div
                 className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
                 role="status"
