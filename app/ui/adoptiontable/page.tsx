@@ -26,13 +26,6 @@ import { revalidatePath } from "next/cache";
 import { use, useEffect, useState } from "react";
 
 export default function AdoptionTable({ adoptions }: any) {
-  let modifiedAdoptions = adoptions.map((adoption: any) => {
-    // Modify the properties of each adoption object
-    return {
-      ...adoption,
-    };
-  });
-
   const [data, setData] = useState(adoptions);
   const [value, setValue] = useState<any>(null);
 
@@ -73,7 +66,7 @@ export default function AdoptionTable({ adoptions }: any) {
       if (error) throw error;
       toast({ title: "Adopción actualizada correctamente." });
       setData((prevData: any) =>
-        prevData.map((adoption: any) =>
+        prevData?.map((adoption: any) =>
           adoption.id === adoptionId ? { ...adoption, status: true } : adoption
         )
       );
