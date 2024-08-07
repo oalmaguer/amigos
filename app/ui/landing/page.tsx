@@ -1,19 +1,12 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import PetList from "../petlist/page";
-import {
-  CalendarIcon,
-  FileTextIcon,
-  MagnifyingGlassIcon,
-} from "@radix-ui/react-icons";
 
 export default function Component() {
   return (
     <div className="bg-background text-foreground">
       <main>
         <section className="container text-center justify-center flex flex-col align-middle mx-auto py-12 px-4 md:px-6 text-center">
-          <h1 className="text-3xl font-bold mb-8">Adopta un Nuevo Amigo</h1>
+          {/* <h1 className="text-3xl font-bold mb-8">Adopta un Nuevo Amigo</h1> */}
           <PetList />
         </section>
         <section className="bg-muted py-12">

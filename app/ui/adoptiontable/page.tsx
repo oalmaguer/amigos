@@ -1,7 +1,17 @@
 "use client";
 import { CONSTANTS } from "@/app/lib/constants";
 import { supabase } from "@/app/lib/supabaseClient";
-import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -129,16 +139,38 @@ export default function AdoptionTable({ adoptions }: any) {
                   <TableCell>{adoption.address}</TableCell>
                   <TableCell>{adoption.reason}</TableCell>
                   <TableCell>{adoption.residencia}</TableCell>
-                  <TableCell>{adoption.pet.pets[0].name}</TableCell>
+                  <TableCell>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="link">
+                          {adoption.pet.pets[0].name}
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            {adoption.pet.pets[0].name}
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            <img src={adoption.pet.pets[0].picture} alt="" />
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cerrar</AlertDialogCancel>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </TableCell>
                   <TableCell>{adoption.pet.pets[0].color}</TableCell>
                   <TableCell>{adoption.pet.pets[0].type}</TableCell>
                   <TableCell>{adoption.pet.pets[0].age}</TableCell>
 
                   <TableCell>
                     <Button
+                      disabled={adoption.status}
                       className={
                         adoption.status
-                          ? "bg-gray-200 opacity-50 cursor-not-allowed"
+                          ? "bg-gray-200 opacity-50 cursor-not-allowed "
                           : "bg-green-500 text-white"
                       }
                       variant="outline"

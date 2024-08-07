@@ -169,22 +169,6 @@ export default function Navbar() {
           >
             Donaciones
           </Link>
-          <Link
-            href="/addpet"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-            onClick={toggleMobileMenu}
-          >
-            Agregar una Mascota
-          </Link>
-          <Link
-            href="/lista-adopt"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-            onClick={toggleMobileMenu}
-          >
-            Ver lista de Adopciones
-          </Link>
           <a
             href="mailto:almaguero95@gmail.com"
             className="text-sm font-medium hover:underline"
@@ -192,6 +176,30 @@ export default function Navbar() {
           >
             Contáctanos
           </a>
+          {user && (
+            <>
+              <Link
+                href="/addpet"
+                className="text-sm font-medium hover:underline"
+                prefetch={false}
+                onClick={toggleMobileMenu}
+              >
+                Agregar una Mascota
+              </Link>
+
+              <Link
+                href="/lista-adopt"
+                className="text-sm font-medium hover:underline"
+                prefetch={false}
+                onClick={toggleMobileMenu}
+              >
+                Ver lista de Adopciones
+              </Link>
+              <Button size="sm" variant="destructive" onClick={handleSignOut}>
+                Cerrar Sesión
+              </Button>
+            </>
+          )}
         </nav>
       )}
     </header>
