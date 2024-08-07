@@ -30,44 +30,46 @@ export default function PetList() {
     <div className="grid grid-cols-1 ">
       <Carousel className="w-full ">
         <CarouselContent className="w-full">
-          {pets.pets.map((_: any, index: number) => (
-            <CarouselItem
-              key={index}
-              className="pl-1 md:basis-1/2 lg:basis-1/4 items-stretch h-full"
-            >
-              <div className="p-1">
-                <Card className="w-full max-w-sm rounded-lg  overflow-hidden shadow-md border-2 border-gray-300 ">
-                  <img
-                    src={`${_.picture}`}
-                    width={300}
-                    height={300}
-                    alt="Pet"
-                    className="w-full h-80 object-cover"
-                  />
-                  <CardContent className="flex flex-col  gap-2 items-center p-6">
-                    <div className="flex flex-col justify-center w-full">
-                      <h3 className="text-xl font-bold mb-2">{_.name}</h3>
-                      <p className="text-sm  text-muted-foreground mb-4">
-                        Edad: {_.age}
-                      </p>
+          {pets.pets
+            .map((_: any, index: number) => (
+              <CarouselItem
+                key={index}
+                className="pl-1 md:basis-1/2 lg:basis-1/4 items-stretch h-full"
+              >
+                <div className="p-1">
+                  <Card className="w-full max-w-sm rounded-lg  overflow-hidden shadow-md border-2 border-gray-300 ">
+                    <img
+                      src={`${_.picture}`}
+                      width={300}
+                      height={300}
+                      alt="Pet"
+                      className="w-full h-80 object-cover"
+                    />
+                    <CardContent className="flex flex-col  gap-2 items-center p-6">
+                      <div className="flex flex-col justify-center w-full">
+                        <h3 className="text-xl font-bold mb-2">{_.name}</h3>
+                        <p className="text-sm  text-muted-foreground mb-4">
+                          Edad: {_.age}
+                        </p>
+                      </div>
+                      <Badge className="bg-green-500 text-white">
+                        {" "}
+                        Disponible
+                      </Badge>
+                    </CardContent>
+                    <div className="w-full text-center text-white flex justify-center p-2 bg-purple-500 hover:bg-purple-600 ">
+                      <Link
+                        href={`/petdetails/${_.id}`}
+                        className="w-full h-9 font-medium text-lg"
+                      >
+                        Ver mas detalles
+                      </Link>
                     </div>
-                    <Badge className="bg-green-500 text-white">
-                      {" "}
-                      Disponible
-                    </Badge>
-                  </CardContent>
-                  <div className="w-full text-center text-white flex justify-center p-2 bg-purple-500 hover:bg-purple-600 ">
-                    <Link
-                      href={`/petdetails/${_.id}`}
-                      className="w-full h-9 font-medium text-lg"
-                    >
-                      Ver mas detalles
-                    </Link>
-                  </div>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))
+            .reverse()}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
