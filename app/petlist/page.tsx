@@ -132,7 +132,7 @@ export default function PetList() {
                   alt={pet.name}
                   width={300}
                   height={300}
-                  className="w-full h-48 object-cover rounded-lg mb-4"
+                  className="w-full h-80 object-cover rounded-lg mb-4"
                 />
                 <h3 className="text-lg font-semibold mb-2">{pet.name}</h3>
                 <p className="text-sm text-muted-foreground mb-2">
