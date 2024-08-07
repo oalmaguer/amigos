@@ -16,6 +16,11 @@ import {
 
 export default function Navbar() {
   // const [user, setUser] = useState<any>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
   const { user } = useAuth();
 
   const router = useRouter();
@@ -122,7 +127,73 @@ export default function Navbar() {
             Contáctanos
           </Button>
         </a>
+        <button className="md:hidden text-primary" onClick={toggleMobileMenu}>
+          {isMobileMenuOpen ? (
+            <XIcon className="h-6 w-6" />
+          ) : (
+            <MenuIcon className="h-6 w-6" />
+          )}
+        </button>
       </div>
+      {isMobileMenuOpen && (
+        <nav className="md:hidden flex flex-col gap-4 mt-4">
+          <Link
+            href="/"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Inicio
+          </Link>
+          <Link
+            href="/petlist"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Ver todas las Mascotas
+          </Link>
+          <Link
+            href="/adopta"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Adopta
+          </Link>
+          <Link
+            href="/donaciones"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Donaciones
+          </Link>
+          <Link
+            href="/addpet"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Agregar una Mascota
+          </Link>
+          <Link
+            href="/lista-adopt"
+            className="text-sm font-medium hover:underline"
+            prefetch={false}
+            onClick={toggleMobileMenu}
+          >
+            Ver lista de Adopciones
+          </Link>
+          <a
+            href="mailto:almaguero95@gmail.com"
+            className="text-sm font-medium hover:underline"
+            onClick={toggleMobileMenu}
+          >
+            Contáctanos
+          </a>
+        </nav>
+      )}
     </header>
   );
 }
@@ -165,6 +236,27 @@ function XIcon(props: any) {
     >
       <path d="M18 6 6 18" />
       <path d="m6 6 12 12" />
+    </svg>
+  );
+}
+
+function MenuIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="18" x2="21" y2="18" />
     </svg>
   );
 }

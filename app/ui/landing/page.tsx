@@ -12,7 +12,7 @@ export default function Component() {
   return (
     <div className="bg-background text-foreground">
       <main>
-        <section className="container mx-auto py-12 px-4 md:px-6">
+        <section className="container text-center justify-center flex flex-col align-middle mx-auto py-12 px-4 md:px-6 text-center">
           <h1 className="text-3xl font-bold mb-8">Adopta un Nuevo Amigo</h1>
           <PetList />
         </section>
@@ -24,7 +24,7 @@ export default function Component() {
 
             <main className="flex-1 py-8 px-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 hover:bg-gray-50 transition-colors">
+                <div className="bg-background text-foreground shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors">
                   <PawPrintIcon className="h-8 w-8 text-purple-500 mb-4" />
                   <h3 className="text-xl font-bold mb-2">
                     Mascotas Verificadas
@@ -34,7 +34,7 @@ export default function Component() {
                     certificado médico.
                   </p>
                 </div>
-                <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 hover:bg-gray-50 transition-colors">
+                <div className="bg-background text-foreground shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors">
                   <HeartIcon className="h-8 w-8 text-purple-500 mb-4" />
                   <h3 className="text-xl font-bold mb-2">Cuidado</h3>
                   <p className="text-sm text-muted-foreground">
@@ -43,7 +43,7 @@ export default function Component() {
                   </p>
                 </div>
 
-                <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 hover:bg-gray-50 transition-colors">
+                <div className="bg-background text-foreground shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors">
                   <HomeIcon className="h-8 w-8 text-purple-500 mb-4" />
                   <h3 className="text-xl font-bold mb-2">Hogar</h3>
                   <p className="text-sm text-muted-foreground">
