@@ -53,27 +53,29 @@ export default function Navbar() {
       </DropdownMenu>
       <div className="flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" prefetch={false}>
-          <PawPrintIcon className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">Amigos de los Animales</span>
+          <PawPrintIcon className="h-6 w-6  text-purple-600  hover:text-purple-500" />
+          <span className="text-xl font-bold text-purple-600">
+            Amigos de los Animales
+          </span>
         </Link>
         <nav className="hidden md:flex items-center gap-4">
           <Link
             href="/"
-            className="text-sm font-medium hover:underline"
+            className="text-sm font-medium hover:underline hover:text-purple-500 transition duration-200 ease-in-out"
             prefetch={false}
           >
             Inicio
           </Link>
           <Link
             href="/petlist"
-            className="text-sm font-medium hover:underline"
+            className="text-sm font-medium hover:underline hover:text-purple-500  transition duration-200 ease-in-out"
             prefetch={false}
           >
             Ver todas las Mascotas
           </Link>
           <Link
             href="/adopta"
-            className="text-sm font-medium hover:underline"
+            className="text-sm font-medium hover:underline  hover:text-purple-500  transition duration-200 ease-in-out"
             prefetch={false}
           >
             Adopta
@@ -81,7 +83,7 @@ export default function Navbar() {
 
           <Link
             href="/donaciones"
-            className="text-sm font-medium hover:underline"
+            className="text-sm font-medium hover:underline  hover:text-purple-500  transition duration-200 ease-in-out"
             prefetch={false}
           >
             Donaciones
@@ -113,7 +115,10 @@ export default function Navbar() {
           )}
         </nav>
         <a href="mailto:almaguero95@gmail.com">
-          <Button size="sm" className="hidden md:inline-flex">
+          <Button
+            size="sm"
+            className="hidden md:inline-flex bg-purple-600 text-white"
+          >
             Contáctanos
           </Button>
         </a>

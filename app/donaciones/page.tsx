@@ -110,7 +110,7 @@ export default function Donaciones() {
                   target="_blank"
                   href="https://www.paypal.com/donate/?business=S46SQQLH59WM6&no_recurring=0&item_name=Cualquier+cantidad+es+apreciada%2C+gracias%21&currency_code=MXN"
                 >
-                  <Button variant="default" className="w-full">
+                  <Button className="w-full text-white bg-purple-500">
                     Haz una Donación :)
                   </Button>
                 </Link>

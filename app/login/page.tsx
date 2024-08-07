@@ -90,7 +90,10 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full text-white bg-purple-500 hover:bg-purple-600"
+            >
               Sign in
             </Button>
           </CardFooter>

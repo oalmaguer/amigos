@@ -48,6 +48,15 @@ export default function AdoptionForm({ pets }: any) {
     });
   };
 
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setAddress("");
+    setResidencia("");
+    setReason("");
+    setPet("");
+  };
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -109,6 +118,7 @@ export default function AdoptionForm({ pets }: any) {
       title: "Adopción exitosa",
       description: "Tu solicitud de adopción ha sido enviada exitosamente.",
     });
+    resetForm();
   };
 
   return (
@@ -225,8 +235,12 @@ export default function AdoptionForm({ pets }: any) {
               />
             </div>
             <div className="mt-6 flex justify-end">
-              <Button type="submit" onClick={handleSubmit}>
-                Submit Application
+              <Button
+                className="bg-purple-500 hover:bg-purple-600 text-white"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Enviar solicitud
               </Button>
             </div>
           </form>

@@ -257,7 +257,12 @@ export default function AddPetForm() {
       </CardContent>
       <CardFooter>
         <div className="flex justify-end">
-          <Button onClick={handleSubmit}>Agregar Mascota</Button>
+          <Button
+            className="bg-purple-500 hover:bg-purple-600 p-2 rounded text-white"
+            onClick={handleSubmit}
+          >
+            Agregar Mascota
+          </Button>
           {showLoading && (
             <div className="ml-4 flex items-center justify-center">
               <div

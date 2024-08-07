@@ -2,6 +2,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import PetList from "../petlist/page";
+import {
+  CalendarIcon,
+  FileTextIcon,
+  MagnifyingGlassIcon,
+} from "@radix-ui/react-icons";
 
 export default function Component() {
   return (
@@ -16,32 +21,38 @@ export default function Component() {
             <h2 className="text-2xl font-bold mb-6">
               Por qué Adoptar un Nuevo Amigo?
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              <div className="bg-background rounded-lg p-6">
-                <PawPrintIcon className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-xl font-bold mb-2">Mascotas Verificadas</h3>
-                <p className="text-sm text-muted-foreground">
-                  Todas nuestras mascotas se entregan vacunadas y con su
-                  certificado médico.
-                </p>
+
+            <main className="flex-1 py-8 px-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 hover:bg-gray-50 transition-colors">
+                  <PawPrintIcon className="h-8 w-8 text-purple-500 mb-4" />
+                  <h3 className="text-xl font-bold mb-2">
+                    Mascotas Verificadas
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Todas nuestras mascotas se entregan vacunadas y con su
+                    certificado médico.
+                  </p>
+                </div>
+                <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 hover:bg-gray-50 transition-colors">
+                  <HeartIcon className="h-8 w-8 text-purple-500 mb-4" />
+                  <h3 className="text-xl font-bold mb-2">Cuidado</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Nuestro dedicado equipo de voluntarios y staff se encargan
+                    de brindar amor y cuidado a cada una de nuestras mascotas.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 hover:bg-gray-50 transition-colors">
+                  <HomeIcon className="h-8 w-8 text-purple-500 mb-4" />
+                  <h3 className="text-xl font-bold mb-2">Hogar</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Trabajamos durante todo el proceso de adopción para que cada
+                    una de nuestras mascotas tenga un hogar perfecto.
+                  </p>
+                </div>
               </div>
-              <div className="bg-background rounded-lg p-6">
-                <HeartIcon className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-xl font-bold mb-2">Cuidado</h3>
-                <p className="text-sm text-muted-foreground">
-                  Nuestro dedicado equipo de voluntarios y staff se encargan de
-                  brindar amor y cuidado a cada una de nuestras mascotas.
-                </p>
-              </div>
-              <div className="bg-background rounded-lg p-6">
-                <HomeIcon className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-xl font-bold mb-2">Hogar</h3>
-                <p className="text-sm text-muted-foreground">
-                  Trabajamos durante todo el proceso de adopción para que cada
-                  una de nuestras mascotas tenga un hogar perfecto.
-                </p>
-              </div>
-            </div>
+            </main>
           </div>
         </section>
         <section className="container mx-auto py-12 px-4 md:px-6">
@@ -56,7 +67,7 @@ export default function Component() {
               </p>
               <Link
                 href="/petlist"
-                className="inline-flex items-center gap-2 text-primary hover:underline"
+                className="inline-flex items-center gap-2 text-purple-500 hover:underline"
                 prefetch={false}
               >
                 Ver Mascotas
@@ -74,7 +85,7 @@ export default function Component() {
               </p>
               <Link
                 href="/adopta"
-                className="inline-flex items-center gap-2 text-primary hover:underline"
+                className="inline-flex items-center gap-2 text-purple-500 hover:underline"
                 prefetch={false}
               >
                 Applicar para Adopción

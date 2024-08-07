@@ -1,5 +1,12 @@
 "use client";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { usePets } from "@/context";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -19,8 +26,49 @@ export default function PetList() {
   //     .catch((error) => console.error(error));
   // }, []);
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {pets.pets.map((pet: any) => (
+    <div className="grid grid-cols-1 ">
+      <Carousel className="w-full ">
+        <CarouselContent className="-ml-1">
+          {pets.pets.map((_: any, index: number) => (
+            <CarouselItem
+              key={index}
+              className="pl-1 md:basis-1/2 lg:basis-1/3 items-stretch h-full"
+            >
+              <div className="p-1">
+                <Card className="w-full max-w-sm bg-background rounded-lg shadow-lg overflow-hidden">
+                  <img
+                    src={`${_.picture}`}
+                    width={300}
+                    height={300}
+                    alt="Pet"
+                    className="w-full h-80 object-cover"
+                  />
+                  <CardContent className="flex flex-col  gap-2 items-center p-6">
+                    <div className="flex flex-col justify-center w-full">
+                      <h3 className="text-xl font-bold mb-2">{_.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Edad: {_.age}
+                      </p>
+                      <p className="text-sm">{_.description}</p>
+                    </div>
+                  </CardContent>
+                  <div className="w-full text-center text-white flex justify-center p-4 bg-purple-500 hover:bg-purple-600 rounded-lg">
+                    <Link
+                      href={`/petdetails/${_.id}`}
+                      className="w-full h-9 font-medium text-lg"
+                    >
+                      Detalles
+                    </Link>
+                  </div>
+                </Card>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+      {/* {pets.pets.map((pet: any) => (
         <Card className="bg-muted rounded-lg overflow-hidden h-30" key={pet.id}>
           <img
             src={`${pet.picture}`}
@@ -46,7 +94,7 @@ export default function PetList() {
             </Link>
           </CardFooter>
         </Card>
-      ))}
+      ))} */}
     </div>
   );
 }
