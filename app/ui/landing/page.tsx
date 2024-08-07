@@ -5,45 +5,31 @@ export default function Component() {
   return (
     <div className="bg-background text-foreground">
       <main>
-        <section className="container text-center justify-center flex flex-col align-middle mx-auto py-12 px-4 md:px-6 text-center">
-          {/* <h1 className="text-3xl font-bold mb-8">Adopta un Nuevo Amigo</h1> */}
+        <section className="container text-center justify-center flex flex-col align-middle mx-auto py-12 px-4 md:px-6">
           <PetList />
         </section>
         <section className="bg-muted py-12">
           <div className="container mx-auto px-4 md:px-6">
             <h2 className="text-2xl font-bold mb-6">
-              Por qué Adoptar un Nuevo Amigo?
+              ¿Por qué Adoptar un Nuevo Amigo?
             </h2>
-
             <main className="flex-1 py-8 px-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div className="bg-background text-foreground shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors">
-                  <PawPrintIcon className="h-8 w-8 text-purple-500 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">
-                    Mascotas Verificadas
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Todas nuestras mascotas se entregan vacunadas y con su
-                    certificado médico.
-                  </p>
-                </div>
-                <div className="bg-background text-foreground shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors">
-                  <HeartIcon className="h-8 w-8 text-purple-500 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">Cuidado</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Nuestro dedicado equipo de voluntarios y staff se encargan
-                    de brindar amor y cuidado a cada una de nuestras mascotas.
-                  </p>
-                </div>
-
-                <div className="bg-background text-foreground shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors">
-                  <HomeIcon className="h-8 w-8 text-purple-500 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">Hogar</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Trabajamos durante todo el proceso de adopción para que cada
-                    una de nuestras mascotas tenga un hogar perfecto.
-                  </p>
-                </div>
+                <FeatureCard
+                  icon={PawPrintIcon}
+                  title="Mascotas Verificadas"
+                  description="Todas nuestras mascotas se entregan vacunadas y con su certificado médico."
+                />
+                <FeatureCard
+                  icon={HeartIcon}
+                  title="Cuidado"
+                  description="Nuestro dedicado equipo de voluntarios y staff se encargan de brindar amor y cuidado a cada una de nuestras mascotas."
+                />
+                <FeatureCard
+                  icon={HomeIcon}
+                  title="Hogar"
+                  description="Trabajamos durante todo el proceso de adopción para que cada una de nuestras mascotas tenga un hogar perfecto."
+                />
               </div>
             </main>
           </div>
@@ -51,40 +37,18 @@ export default function Component() {
         <section className="container mx-auto py-12 px-4 md:px-6">
           <h2 className="text-2xl font-bold mb-6">Cómo Adoptar</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-xl font-bold mb-4">
-                Paso 1: Explora las Mascotas
-              </h3>
-              <p className="text-sm text-muted-foreground mb-6">
-                Echa un vistazo a nuestras mascotas disponibles para adoptar.
-              </p>
-              <Link
-                href="/petlist"
-                className="inline-flex items-center gap-2 text-purple-500 hover:underline"
-                prefetch={false}
-              >
-                Ver Mascotas
-                <ArrowRightIcon className="h-4 w-4" />
-              </Link>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4">
-                Paso 2: Aplica para Adoptar
-              </h3>
-              <p className="text-sm text-muted-foreground mb-6">
-                Llena el formulario de solicitud para adoptar una mascota y
-                nuestro equipo revisará para asegurar la mejor coincidencia para
-                usted y la mascota.
-              </p>
-              <Link
-                href="/adopta"
-                className="inline-flex items-center gap-2 text-purple-500 hover:underline"
-                prefetch={false}
-              >
-                Applicar para Adopción
-                <ArrowRightIcon className="h-4 w-4" />
-              </Link>
-            </div>
+            <StepCard
+              title="Paso 1: Explora las Mascotas"
+              description="Echa un vistazo a nuestras mascotas disponibles para adoptar."
+              link="/petlist"
+              linkText="Ver Mascotas"
+            />
+            <StepCard
+              title="Paso 2: Aplica para Adoptar"
+              description="Llena el formulario de solicitud para adoptar una mascota y nuestro equipo revisará para asegurar la mejor coincidencia para usted y la mascota."
+              link="/adopta"
+              linkText="Aplicar para Adopción"
+            />
           </div>
         </section>
       </main>
@@ -92,7 +56,34 @@ export default function Component() {
   );
 }
 
-function ArrowRightIcon(props: any) {
+function FeatureCard({ icon: Icon, title, description }) {
+  return (
+    <div className="bg-background text-foreground shadow-md rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors">
+      <Icon className="h-8 w-8 text-purple-500 mb-4" />
+      <h3 className="text-xl font-bold mb-2">{title}</h3>
+      <p className="text-sm text-muted-foreground">{description}</p>
+    </div>
+  );
+}
+
+function StepCard({ title, description, link, linkText }) {
+  return (
+    <div>
+      <h3 className="text-xl font-bold mb-4">{title}</h3>
+      <p className="text-sm text-muted-foreground mb-6">{description}</p>
+      <Link
+        href={link}
+        className="inline-flex items-center gap-2 text-purple-500 hover:underline"
+        prefetch={false}
+      >
+        {linkText}
+        <ArrowRightIcon className="h-4 w-4" />
+      </Link>
+    </div>
+  );
+}
+
+function ArrowRightIcon(props) {
   return (
     <svg
       {...props}
@@ -112,7 +103,7 @@ function ArrowRightIcon(props: any) {
   );
 }
 
-function HeartIcon(props: any) {
+function HeartIcon(props) {
   return (
     <svg
       {...props}
@@ -131,7 +122,7 @@ function HeartIcon(props: any) {
   );
 }
 
-function HomeIcon(props: any) {
+function HomeIcon(props) {
   return (
     <svg
       {...props}
@@ -151,7 +142,7 @@ function HomeIcon(props: any) {
   );
 }
 
-function PawPrintIcon(props: any) {
+function PawPrintIcon(props) {
   return (
     <svg
       {...props}
