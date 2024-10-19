@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 
-export default function PetList({ pets }: { pets: any }) {
+export default function PetList({ pets }) {
   console.log(pets);
   const updatedPets = pets.filter((pet: any) => pet.status === 0);
   console.log(updatedPets);
@@ -60,7 +60,7 @@ export default function PetList({ pets }: { pets: any }) {
                           Edad: {_.age}
                         </p>
                       </div>
-                      <Badge className="bg-green-500 text-white">
+                    <Badge className="bg-green-500 text-white">
                         {" "}
                         Disponible
                       </Badge>
