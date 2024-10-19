@@ -42,7 +42,7 @@ export default function PetList({ pets }: { pets: any }) {
             .map((_: any, index: number) => (
               <CarouselItem
                 key={index}
-                className="pl-1 md:basis-1/2 lg:basis-1/4 items-stretch h-full"
+                className="pl-1 md:basis-1/2 lg:basis-1/3 "
               >
                 <div className="p-1">
                   <Card className="w-full max-w-sm rounded-lg  overflow-hidden shadow-md border-2 border-gray-300 ">
@@ -67,14 +67,20 @@ export default function PetList({ pets }: { pets: any }) {
                     </CardContent>
                     <div className="w-full text-center text-white flex justify-center p-2 bg-orange-400 hover:bg-orange-500 transition-colors ">
                       <Link
+                        className="w-full bg-green-700 hover:bg-green-800 text-white border border-gray-100 p-1 rounded hover:border-gray-200 transition-all duration-200"
+                        href={`/adopta`}
+                      >
+                        Adopta
+                      </Link>
+                      <Link
+                        className="w-full bg-gray-0 hover:bg-gray-100 border border-gray-300 p-1 rounded hover:border-gray-200 transition-all duration-200"
                         href={`/petdetails/${_.id}`}
-                        className="w-full h-9 font-medium text-lg"
                       >
                         Ver mas detalles
                       </Link>
                     </div>
-                  </Card>
-                </div>
+                  </CardContent>
+                </Card>
               </CarouselItem>
             ))
             .reverse()}
