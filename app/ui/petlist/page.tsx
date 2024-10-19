@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function PetList({ pets }: any) {
   console.log(pets);
+  if (!pets) return <div>No pets found</div>;
   const updatedPets = pets.filter((pet: any) => pet.status === 0);
   console.log(updatedPets);
   return (
