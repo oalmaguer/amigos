@@ -1,34 +1,42 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { usePets } from "@/context";
+import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { createContext, useContext } from "react";
-const PetsContext = createContext([]);
 
-export default function PetList() {
-  // const [pets, setPets] = useState([]);
-  const pets: any = usePets();
-
-  // useEffect(() => {
-  //   fetch("/api/pets")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setPets(data);
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, []);
+export default function PetList({ pets }: { pets: any }) {
+  console.log(pets);
+  const updatedPets = pets.filter((pet: any) => pet.status === 0);
+  console.log(updatedPets);
   return (
-    <div className="grid grid-cols-1 ">
-      <Carousel className="w-full ">
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+      {updatedPets.slice(0, 4).map((pet: any) => (
+        <Card className="bg-white rounded-lg text-start" key={pet.id}>
+          <img
+            src={`${pet.picture}`}
+            width={500}
+            height={500}
+            alt="Pet"
+            className="w-full p-2 h-80 object-cover rounded-3xl hover:scale-105 transition-all duration-300"
+          />
+          <CardContent className="flex flex-col gap-2 p-4">
+            <h3 className="text-2xl font-bold">{pet.name}</h3>
+            <p className="text-md font-thin text-muted-foreground ">
+              Edad: {pet.age}
+            </p>
+            <div className="flex justify-between">
+              <Link
+                href={`/petdetails/${pet.id}`}
+                className="inline-flex items-center gap-2 text-sky-500 hover:underline"
+                prefetch={false}
+              >
+                Ver mas detalles
+              </Link>
+              <Badge className="bg-green-500 text-white"> Disponible </Badge>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+      {/* <Carousel className="w-full ">
         <CarouselContent className="w-full">
           {pets.pets
             .map((_: any, index: number) => (
@@ -57,7 +65,7 @@ export default function PetList() {
                         Disponible
                       </Badge>
                     </CardContent>
-                    <div className="w-full text-center text-white flex justify-center p-2 bg-purple-500 hover:bg-purple-600 ">
+                    <div className="w-full text-center text-white flex justify-center p-2 bg-orange-400 hover:bg-orange-500 transition-colors ">
                       <Link
                         href={`/petdetails/${_.id}`}
                         className="w-full h-9 font-medium text-lg"
@@ -73,7 +81,7 @@ export default function PetList() {
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
-      </Carousel>
+      </Carousel> */}
       {/* {pets.pets.map((pet: any) => (
         <Card className="bg-muted rounded-lg overflow-hidden h-30" key={pet.id}>
           <img

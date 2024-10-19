@@ -1,16 +1,12 @@
 "use client";
-import { createClient } from "@/utils/supabase/server";
 import AdoptionTable from "../ui/adoptiontable/page";
-import { redirect, useRouter } from "next/navigation";
-import { useAuth } from "@/context/auth";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
-import { get } from "http";
 
 export default function AdoptList() {
   const router = useRouter();
   const [adoptions, setAdoptions] = useState<any>([]);
-  const [session, setSession] = useState<any>(null);
 
   const getPetsession = async () => {
     const {
@@ -18,8 +14,6 @@ export default function AdoptList() {
     } = await supabase.auth.getSession();
 
     if (!session) router.push("/login");
-
-    setSession(session);
   };
   useEffect(() => {
     getPetsession();
@@ -34,16 +28,17 @@ export default function AdoptList() {
     });
 
     const result = await response.json();
-
+    console.log(result);
     if (result.error) return result.error;
+    setAdoptions(result.data);
 
-    const convert = await Promise.all(
-      result.data.map(async (elem: any) => {
-        return { ...elem, pet: await getPets(elem.pet) };
-      })
-    );
+    // const convert = await Promise.all(
+    //   result.data.map(async (elem: any) => {
+    //     return { ...elem, pet: await getPets(elem.pet) };
+    //   })
+    // );
 
-    setAdoptions(convert);
+    // setAdoptions(convert);
   };
 
   const getPets = async (id: any) => {
@@ -61,5 +56,31 @@ export default function AdoptList() {
     }
   };
 
+  // const mascotAdopted = async (adoptionId: any) => {
+  //   try {
+  //     const { data: updatedData, error } = await supabase
+  //       .from("adopciones")
+  //       .update({ status: true })
+  //       .eq("id", adoptionId)
+  //       .select();
+
+  //     if (error) throw error;
+
+  //     // Update the pet's status in the pets context
+  //     const petId = updatedData[0].pet; // Assuming updatedData contains the pet ID
+  //     setPets((prevPets) =>
+  //       prevPets.map((pet) => (pet.id === petId ? { ...pet, status: 1 } : pet))
+  //     );
+
+  //     // Optionally, you can also update the local state of adoptions
+  //     setAdoptions((prevAdoptions) =>
+  //       prevAdoptions.map((adoption) =>
+  //         adoption.id === adoptionId ? { ...adoption, status: true } : adoption
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Error updating adoption status:", error);
+  //   }
+  // };
   return <AdoptionTable adoptions={adoptions} />;
 }

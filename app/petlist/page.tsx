@@ -8,21 +8,27 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CONSTANTS } from "../lib/constants";
-import { usePets } from "@/context";
+import { usePets } from "@/context/petsprovider";
 
 export default function PetList() {
   // const [pets, setPets] = useState<any>([]);
+  const [updatedPets, setUpdatedPets] = useState<any>([]);
   const [filters, setFilters] = useState({
     color: "todos",
     name: "",
     type: "todos",
   });
 
-  const pets: any = usePets();
+  const { pets } = usePets();
 
+  useEffect(() => {
+    console.log(pets);
+    setUpdatedPets(pets.filter((pet: any) => pet.status === 0));
+  }, [pets]);
+
+  console.log(pets);
   const handleFilterChange = (type: any, value: any) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -31,7 +37,7 @@ export default function PetList() {
   };
 
   const filteredPets = useMemo(() => {
-    return pets.pets.filter((pet: any) => {
+    return updatedPets.filter((pet: any) => {
       const matchesColor =
         filters.color === "todos" || pet.color.includes(filters.color);
       const matchesName = pet.name
@@ -41,7 +47,7 @@ export default function PetList() {
         filters.type === "todos" || pet.type.includes(filters.type);
       return matchesColor && matchesName && matchesType;
     });
-  }, [pets, filters]);
+  }, [updatedPets, filters]);
 
   return (
     <div className="w-full">

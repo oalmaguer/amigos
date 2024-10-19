@@ -20,7 +20,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import {
   Table,
@@ -31,14 +30,16 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { useToast } from "@/components/ui/use-toast";
+import { usePets } from "@/context/petsprovider";
 import { get } from "http";
 import { revalidatePath } from "next/cache";
 import { use, useEffect, useState } from "react";
 
 export default function AdoptionTable({ adoptions }: any) {
+  console.log(adoptions);
   const [data, setData] = useState(adoptions);
   const [value, setValue] = useState<any>(null);
-
+  const { pets, setPets } = usePets();
   const [updated, setUpdated] = useState<any>([]);
   useEffect(() => {
     setData(adoptions);
@@ -73,13 +74,28 @@ export default function AdoptionTable({ adoptions }: any) {
         .eq("id", adoptionId)
         .select();
 
-      if (error) throw error;
+      console.log(updatedData);
+
+      //status 0 for not adopted and 1 for adopted, did it this way in case I add more status
+      const { data: petData, error: petError } = await supabase
+        .from("pets")
+        .update({ status: 1 })
+        .eq("id", updatedData[0].pet)
+        .select();
+
+      if (error || petError) {
+        toast({ title: "Ha ocurrido un error. Intenta de nuevo." });
+        return;
+      }
+      console.log(adoptions);
+      const petId = updatedData[0].pet; // Assuming updatedData contains the pet ID
+      console.log(petId);
+
       toast({ title: "Adopción actualizada correctamente." });
-      setData((prevData: any) =>
-        prevData?.map((adoption: any) =>
-          adoption.id === adoptionId ? { ...adoption, status: true } : adoption
-        )
+      setPets((prevPets) =>
+        prevPets.map((pet) => (pet.id === petId ? { ...pet, status: 1 } : pet))
       );
+      console.log(pets);
     } catch (error) {
       toast({ title: "Ha ocurrido un error. Intenta de nuevo." });
     }
@@ -137,22 +153,16 @@ export default function AdoptionTable({ adoptions }: any) {
                     })}
                   </TableCell>
                   <TableCell>{adoption.address}</TableCell>
-                  <TableCell>{adoption.reason}</TableCell>
-                  <TableCell>{adoption.residencia}</TableCell>
                   <TableCell>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="link">
-                          {adoption.pet.pets[0].name}
-                        </Button>
+                        <Button variant="link">Leer</Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            {adoption.pet.pets[0].name}
-                          </AlertDialogTitle>
+                          <AlertDialogTitle>Razón</AlertDialogTitle>
                           <AlertDialogDescription>
-                            <img src={adoption.pet.pets[0].picture} alt="" />
+                            {adoption.reason}
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -161,9 +171,56 @@ export default function AdoptionTable({ adoptions }: any) {
                       </AlertDialogContent>
                     </AlertDialog>
                   </TableCell>
-                  <TableCell>{adoption.pet.pets[0].color}</TableCell>
-                  <TableCell>{adoption.pet.pets[0].type}</TableCell>
-                  <TableCell>{adoption.pet.pets[0].age}</TableCell>
+                  <TableCell>{adoption.residencia}</TableCell>
+                  <TableCell>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="link">
+                          {
+                            pets.find((pet: any) => pet.id === adoption.pet)
+                              .name
+                          }
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            {
+                              pets.find((pet: any) => pet.id === adoption.pet)
+                                .name
+                            }
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            <img
+                              src={
+                                pets.find((pet: any) => pet.id === adoption.pet)
+                                  .picture
+                              }
+                              alt=""
+                            />
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cerrar</AlertDialogCancel>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </TableCell>
+                  {
+                    <TableCell>
+                      {pets.find((pet: any) => pet.id === adoption.pet).color}
+                    </TableCell>
+                  }
+                  {
+                    <TableCell>
+                      {pets.find((pet: any) => pet.id === adoption.pet).type}
+                    </TableCell>
+                  }
+                  {
+                    <TableCell>
+                      {pets.find((pet: any) => pet.id === adoption.pet).age}
+                    </TableCell>
+                  }
 
                   <TableCell>
                     <Button

@@ -20,7 +20,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     // Check for existing session
@@ -40,7 +40,7 @@ export default function LoginPage() {
   const handleLogin = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setErrorMessage(null);
 
     const { user, error }: any = await supabase.auth.signInWithPassword({
       email,
@@ -48,10 +48,9 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setError(error.message);
+      setErrorMessage(error.message);
     } else {
       // Autenticación exitosa, redirigir o realizar acciones necesarias
-
       router.push("/");
     }
 
@@ -60,7 +59,7 @@ export default function LoginPage() {
 
   return (
     <form onSubmit={handleLogin}>
-      <div className="flex items-center justify-center h-[calc(100vh-3.5rem)]">
+      <div className="flex items-center flex-col gap-4 justify-center h-[calc(100vh-3.5rem)]">
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl">Login</CardTitle>
@@ -90,12 +89,19 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button
-              type="submit"
-              className="w-full text-white bg-purple-500 hover:bg-purple-600"
-            >
-              Sign in
-            </Button>
+            <div className="footer flex flex-col gap-2 w-full">
+              {errorMessage && (
+                <p className="text-red-500 text-center font-bold">
+                  {errorMessage}
+                </p>
+              )}
+              <Button
+                type="submit"
+                className="w-full text-white bg-orange-500 hover:bg-purple-600"
+              >
+                Sign in
+              </Button>
+            </div>
           </CardFooter>
         </Card>
       </div>

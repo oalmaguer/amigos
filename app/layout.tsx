@@ -2,15 +2,20 @@ import type { Metadata } from "next";
 import "./ui/globals.css";
 import Navbar from "./ui/navbar/page";
 import Footer from "./ui/footer/page";
-import { PetsProvider } from "@/context";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/context/auth";
 import { ThemeProvider } from "@/components/ui/themeprovider";
-
+import { Rowdies } from "next/font/google";
+import { PetsProvider } from "@/context/petsprovider";
 export const metadata: Metadata = {
   title: "Amigos App",
   description: "Hecho por OLiver",
 };
+
+const rowdies = Rowdies({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+});
 
 export default function RootLayout({
   children,
@@ -19,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`h-screen flex flex-col font-sans`}>
+      <body className={`h-screen flex flex-col  ${rowdies.className}`}>
         <AuthProvider>
           <PetsProvider>
             <ThemeProvider

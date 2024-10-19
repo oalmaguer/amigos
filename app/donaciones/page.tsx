@@ -1,8 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
@@ -63,54 +60,12 @@ export default function Donaciones() {
               hace una diferencia.
             </p>
             <div className="space-y-4">
-              {/* <div>
-                <Label htmlFor="amount">Cantidad de donación</Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    id="amount"
-                    name="amount"
-                    type="number"
-                    placeholder="Ingrese cantidad"
-                    onChange={(e) => handleChange("amount", e.target.value)}
-                  />
-                  <span className="text-muted-foreground">MXN</span>
-                </div>
-              </div> */}
-
-              {/* <div>
-                <Label htmlFor="name">Nombre</Label>
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Ingresa tu nombre"
-                  onChange={(e) => handleChange("name", e.target.value)}
-                />
-              </div>
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Ingresa tu email"
-                  onChange={(e) => handleChange("email", e.target.value)}
-                />
-              </div>
-              <div>
-                <Label htmlFor="message">Mensaje</Label>
-                <Input
-                  id="message"
-                  type="message"
-                  placeholder="Escribe un mensaje"
-                  onChange={(e) => handleChange("message", e.target.value)}
-                />
-              </div> */}
               <div className="">
                 <Link
                   target="_blank"
                   href="https://www.paypal.com/donate/?business=S46SQQLH59WM6&no_recurring=0&item_name=Cualquier+cantidad+es+apreciada%2C+gracias%21&currency_code=MXN"
                 >
-                  <Button className="w-full text-white bg-purple-500">
+                  <Button className="w-full text-white bg-orange-500">
                     Haz una Donación :)
                   </Button>
                 </Link>

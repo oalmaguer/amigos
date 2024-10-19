@@ -58,37 +58,44 @@ export default function Navbar() {
       </DropdownMenu>
       <div className="flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" prefetch={false}>
-          <PawPrintIcon className="h-6 w-6  text-purple-600  hover:text-purple-500" />
-          <span className="text-xl font-bold text-purple-600">
+          <PawPrintIcon className="h-6 w-6  text-orange-600  hover:text-orange-500" />
+          <span className="text-xl font-bold text-orange-600">
             Amigos de los Animales
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-4">
           <Link
             href="/"
-            className="text-sm font-medium hover:underline hover:text-purple-500 transition duration-200 ease-in-out"
+            className="text-sm font-medium hover:underline hover:text-orange-500 transition duration-200 ease-in-out"
             prefetch={false}
           >
             Inicio
           </Link>
           <Link
             href="/petlist"
-            className="text-sm font-medium hover:underline hover:text-purple-500  transition duration-200 ease-in-out"
+            className="text-sm font-medium hover:underline hover:text-orange-500  transition duration-200 ease-in-out"
             prefetch={false}
           >
-            Ver todas las Mascotas
+            Adopta!
           </Link>
           <Link
+            href="/about"
+            className="text-sm font-medium hover:underline hover:text-orange-500  transition duration-200 ease-in-out"
+            prefetch={false}
+          >
+            Quiénes Somos
+          </Link>
+          {/* <Link
             href="/adopta"
-            className="text-sm font-medium hover:underline  hover:text-purple-500  transition duration-200 ease-in-out"
+            className="text-sm font-medium hover:underline  hover:text-orange-500  transition duration-200 ease-in-out"
             prefetch={false}
           >
             Adopta
-          </Link>
+          </Link> */}
 
           <Link
             href="/donaciones"
-            className="text-sm font-medium hover:underline  hover:text-purple-500  transition duration-200 ease-in-out"
+            className="text-sm font-medium hover:underline  hover:text-orange-500  transition duration-200 ease-in-out"
             prefetch={false}
           >
             Donaciones
@@ -122,7 +129,7 @@ export default function Navbar() {
         <a href="mailto:almaguero95@gmail.com">
           <Button
             size="sm"
-            className="hidden md:inline-flex bg-purple-600 text-white"
+            className="hidden md:inline-flex bg-orange-600 text-white"
           >
             Contáctanos
           </Button>

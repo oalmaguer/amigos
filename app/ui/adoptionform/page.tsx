@@ -13,18 +13,18 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Label } from "@radix-ui/react-label";
-import Image from "next/image";
 import { useState } from "react";
+export default function AdoptionForm({ pet }: any) {
+  console.log(pet);
 
-export default function AdoptionForm({ pets }: any) {
-  const pets2 = pets;
+  // const pets2 = pets;
   const { toast } = useToast();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [residencia, setResidencia] = useState("");
-  const [pet, setPet] = useState("");
+  // const [selectedPet, setSelectedPet] = useState("");
   const [reason, setReason] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -55,7 +55,6 @@ export default function AdoptionForm({ pets }: any) {
     setAddress("");
     setResidencia("");
     setReason("");
-    setPet("");
   };
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -86,7 +85,7 @@ export default function AdoptionForm({ pets }: any) {
     }
     const formattedData = {
       ...body,
-      pet: parseInt(body.pet),
+      pet: parseInt(pet),
     };
 
     const response = await fetch("/api/adoption", {
@@ -122,130 +121,117 @@ export default function AdoptionForm({ pets }: any) {
   };
 
   return (
-    <main>
-      <section className="container mx-auto py-12 px-4 md:px-6">
-        <h1 className="text-3xl font-bold mb-8">Formulario de Adopción</h1>
-        <Card className="rounded-lg p-6">
-          <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Nombre</Label>
-                  <Input
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    id="name"
-                    type="text"
-                    name="name"
-                    placeholder="Ingresa tu nombre"
-                  />
+    <main
+      id="petform"
+      className="container flex flex-col gap-4 items-center justify-center w-full"
+    >
+      <h1 className="text-3xl font-bold">Formulario de Adopción</h1>
+      <div className="form flex gap-4 items-center justify-center self-center  flex-wrap ">
+        {/* <div className="pet flex flex-col gap-4 items-center justify-center self-center w-1/2">
+          <Image
+            src={pet.picture}
+            alt={pet.name}
+            width={300}
+            height={300}
+            className="rounded-3xl max-h-[300px] max-w-[300px] object-cover"
+          />
+          <p className="text-lg self-center ">{pet.name}</p>
+          <p className="text-start text-md font-thin">{pet.description}</p>
+        </div> */}
+        <section className="container mx-auto py-12 px-4 md:px-6">
+          <Card className="rounded-lg p-6">
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-wrap">
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="name">Nombre</Label>
+                    <Input
+                      value={name}
+                      onChange={(event) => setName(event.target.value)}
+                      id="name"
+                      type="text"
+                      name="name"
+                      placeholder="Ingresa tu nombre"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="residencia">Estado Civil</Label>
+                    <Select
+                      value={residencia}
+                      onValueChange={(value) => setResidencia(value)}
+                      name="residencia"
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Estado Civil" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {CONSTANTS.RESIDENCIA.map((residencia) => (
+                          <SelectItem key={residencia} value={residencia}>
+                            {residencia}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      name="email"
+                      placeholder="Ingresa tu email"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="Ingresa tu teléfono"
+                      value={phone}
+                      onChange={(event) => setPhone(event.target.value)}
+                    />
+                  </div>
                 </div>
                 <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder="Ingresa tu email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                  <Label htmlFor="address">Dirección</Label>
+                  <Textarea
+                    name="address"
+                    id="address"
+                    placeholder="Ingresa tu dirección"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
-                <div>
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    placeholder="Ingresa tu teléfono"
-                    value={phone}
-                    onChange={(event) => setPhone(event.target.value)}
+                <div className="">
+                  <Label htmlFor="reason">
+                    Por qué quieres adoptar a una mascota?
+                  </Label>
+                  <Textarea
+                    name="reason"
+                    id="reason"
+                    placeholder="Ingresa tu razón"
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
                   />
                 </div>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="residencia">Estado Civil</Label>
-                  <Select
-                    value={residencia}
-                    onValueChange={(value) => setResidencia(value)}
-                    name="residencia"
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Estado Civil" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {CONSTANTS.RESIDENCIA.map((residencia) => (
-                        <SelectItem key={residencia} value={residencia}>
-                          {residencia}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="pet">Mascota</Label>
-                  <Select
-                    name="pet"
-                    value={pet}
-                    onValueChange={(value) => setPet(value)}
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Mascota" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {pets2?.pets.map((tipo: any) => (
-                        <SelectItem key={tipo.id} value={tipo.id.toString()}>
-                          <div className="flex items-center">
-                            <Image
-                              src={tipo.picture}
-                              alt={tipo.name}
-                              width={30}
-                              height={30}
-                            />
-                            <span>{tipo.name}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className=" flex justify-start mt-4">
+                <Button
+                  className="bg-orange-500 hover:bg-purple-600 text-white"
+                  type="submit"
+                  onClick={handleSubmit}
+                >
+                  Enviar solicitud
+                </Button>
               </div>
-            </div>
-            <div>
-              <Label htmlFor="address">Dirección</Label>
-              <Textarea
-                name="address"
-                id="address"
-                placeholder="Ingresa tu dirección"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-            <div className="mt-6">
-              <Label htmlFor="reason">
-                Por qué quieres adoptar a una mascota?
-              </Label>
-              <Textarea
-                name="reason"
-                id="reason"
-                placeholder="Ingresa tu razón"
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-              />
-            </div>
-            <div className="mt-6 flex justify-end">
-              <Button
-                className="bg-purple-500 hover:bg-purple-600 text-white"
-                type="submit"
-                onClick={handleSubmit}
-              >
-                Enviar solicitud
-              </Button>
-            </div>
-          </form>
-        </Card>
-      </section>
+            </form>
+          </Card>
+        </section>
+      </div>
     </main>
   );
 }
