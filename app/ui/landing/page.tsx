@@ -26,15 +26,17 @@ export default function Component() {
   console.log(pets);
   return (
     <div className="bg-background text-foreground container flex flex-col gap-20">
-      <main className="flex ">
+      <main className="flex lg:flex-row flex-col  justify-center items-center">
         <div className="text flex self-center h-100 flex-col gap-4 justify-start w-3/4">
-          <h1 className="text-7xl font-bold">Adopta una mascota</h1>
-          <p className="text-lg w-4/6 font-medium text-muted-foreground">
+          <h1 className="text-2xl lg:text-7xl  font-bold">
+            Adopta una mascota
+          </h1>
+          <p className="text-lg lg:w-4/6 font-medium text-muted-foreground">
             En amigos de los animales nos esforzamos por encontrar a cada
             mascota un hogar ideal, llena nuestro formulario de adopción y
             comienza tu nueva aventura.
           </p>
-          <div className="buttons flex gap-4 ">
+          <div className="buttons flex flex-col lg:flex-row gap-4 justify-center lg:justify-start items-center">
             <Link href="/about">
               <Button className="bg-orange-500 shadow-[0_4px_15px_rgba(255,165,0,0.5)] hover:shadow-[0_8px_20px_rgba(255,165,0,0.7)]  w-40 py-8 rounded-lg text-white hover:bg-orange-400 mt-10 self-start hover:scale-105 transition-all duration-300">
                 Quiénes Somos
