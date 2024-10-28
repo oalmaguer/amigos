@@ -24,11 +24,11 @@ export default function Footer() {
             Ver todas las Mascotas
           </Link>
           <Link
-            href="/adopta"
+            href="/petlist"
             className="text-sm font-medium hover:underline"
             prefetch={false}
           >
-            Adopta
+            Ver mascotas en adopción
           </Link>
           {/* <Link
             href="#"

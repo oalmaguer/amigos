@@ -69,7 +69,7 @@ export default function Navbar() {
             className="text-sm font-medium hover:underline hover:text-orange-500  transition duration-200 ease-in-out"
             prefetch={false}
           >
-            Adopta!
+            Ver mascotas en adopción
           </Link>
           <Link
             href="/about"
@@ -151,16 +151,9 @@ export default function Navbar() {
             prefetch={false}
             onClick={toggleMobileMenu}
           >
-            Ver todas las Mascotas
+            Ver mascotas en adopción
           </Link>
-          <Link
-            href="/adopta"
-            className="text-sm font-medium hover:underline"
-            prefetch={false}
-            onClick={toggleMobileMenu}
-          >
-            Adopta
-          </Link>
+        
           <Link
             href="/donaciones"
             className="text-sm font-medium hover:underline"
